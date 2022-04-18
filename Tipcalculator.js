@@ -1,22 +1,22 @@
-const tipCalculator = (sum, percentage, currency, prefix) => {
-    let tip = sum * (percentage / 100);
-    let total = sum + tip;
-    if (prefix) {
-      console.log(`
-          Sum before tip: ${currency}${sum}
-          Tip percentage: ${percentage}%
-          Tip:            ${currency}${tip.toFixed(2)}
-          Total:          ${currency}${total.toFixed(2)}
-        `);
-    } else {
-      console.log(`
-          Sum before tip: ${sum}${currency}
-          Tip percentage: ${percentage}%
-          Tip:            ${tip.toFixed(2)}${currency}
-          Total:          ${total.toFixed(2)}${currency}
-        `);
-    }
-  };
-  
-  tipCalculator(29.95, 18, "kr", false);
-  
+const formatter = (locale = "en-US", currency = "USD", value) => {
+  let formattedValue = new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: currency,
+  }).format(value);
+
+  return formattedValue;
+};
+
+const tipCalculator = (sum, percentage, locale, currency) => {
+  let tip = sum * (percentage / 100);
+  let total = sum + tip;
+
+  console.log(`
+    Sum before tip: ${formatter(locale, currency, sum)}
+    Tip percentage: ${percentage}%
+    Tip:            ${formatter(locale, currency, tip)}
+    Total:          ${formatter(locale, currency, total)}
+  `);
+};
+
+console.log(tipCalculator(29.95, 18, "de-DE", "EUR"));
